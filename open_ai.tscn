@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://d0hc8akpewi4w"]
+
+[ext_resource type="Script" path="res://open_ai.gd" id="1_weak5"]
+
+[node name="OpenAI" type="Node"]
+script = ExtResource("1_weak5")
