@@ -1,8 +1,10 @@
 [gd_scene load_steps=4 format=3 uid="uid://dsup8sbl75asf"]
 
 [ext_resource type="Script" path="res://Main.gd" id="1_tmv5i"]
-[ext_resource type="Texture2D" uid="uid://deqvt0n8emxfe" path="res://otter.png" id="2_pxs2x"]
 [ext_resource type="PackedScene" uid="uid://d0hc8akpewi4w" path="res://open_ai.tscn" id="4_rc1sb"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_xeswd"]
+font_size = 64
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_tmv5i")
@@ -10,15 +12,21 @@ script = ExtResource("1_tmv5i")
 [node name="HTTPRequest" type="HTTPRequest" parent="."]
 accept_gzip = false
 
+[node name="Label" type="Label" parent="."]
+offset_left = 830.0
+offset_top = 450.0
+offset_right = 1059.0
+offset_bottom = 541.0
+text = "loading"
+label_settings = SubResource("LabelSettings_xeswd")
+
 [node name="TextureRect" type="TextureRect" parent="."]
-offset_left = 231.0
-offset_right = 999.0
-offset_bottom = 643.0
-texture = ExtResource("2_pxs2x")
+offset_top = 1.0
+offset_right = 1919.0
+offset_bottom = 1082.0
 expand_mode = 1
 
 [node name="OpenAI" parent="." instance=ExtResource("4_rc1sb")]
-API_KEY = "sk-"
 
 [connection signal="request_completed" from="HTTPRequest" to="." method="_on_http_request_request_completed"]
 [connection signal="response" from="OpenAI" to="." method="_on_open_ai_response"]

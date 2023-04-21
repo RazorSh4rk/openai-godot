@@ -1,0 +1,50 @@
+[gd_scene load_steps=8 format=3 uid="uid://dgqjd60ytjwl"]
+
+[ext_resource type="Script" path="res://3dscene.gd" id="1_vqsvs"]
+[ext_resource type="PackedScene" uid="uid://d0hc8akpewi4w" path="res://open_ai.tscn" id="2_ttojf"]
+
+[sub_resource type="Environment" id="Environment_pndj3"]
+background_energy_multiplier = 0.0
+ambient_light_color = Color(0.52549, 0.545098, 0, 1)
+ambient_light_energy = 0.1
+tonemap_mode = 2
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7c0qn"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_caabq"]
+material = SubResource("StandardMaterial3D_7c0qn")
+size = Vector3(10, 5, 0.1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_uu05u"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_ikqqm"]
+material = SubResource("StandardMaterial3D_uu05u")
+size = Vector3(10, 0.1, 5)
+
+[node name="3dscene" type="Node3D"]
+script = ExtResource("1_vqsvs")
+
+[node name="OpenAI" parent="." instance=ExtResource("2_ttojf")]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_pndj3")
+
+[node name="wall0" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_caabq")
+skeleton = NodePath("../wall1")
+
+[node name="wall1" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3.38892)
+mesh = SubResource("BoxMesh_caabq")
+
+[node name="floor" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.52252, 1.01573)
+mesh = SubResource("BoxMesh_ikqqm")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(0.032322, 0.0671457, 0.99722, 0, 0.997741, -0.0671808, -0.999477, 0.00217142, 0.032249, 6.11542, -0.565589, 1.84563)
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.69265)
+
+[connection signal="response" from="OpenAI" to="." method="_on_open_ai_response"]
